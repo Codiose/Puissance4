@@ -128,7 +128,7 @@ public class Joueurs {
 	
 	//================Fonction verifie_si_gagner==================================
 	
-	public static void wonOrNot(int numero, String couleur, int ligne, int colonne) {
+	public static void verifie_si_gagner(int numero, String couleur, int ligne, int colonne) {
 		
 		
 	}
