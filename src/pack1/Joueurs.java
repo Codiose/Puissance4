@@ -14,7 +14,7 @@ public class Joueurs {
 	private String couleur_pion;
 	public static String[][] grilleJoueur = new String[7][7];
 	static Scanner windu = new Scanner(System.in);
-	public static int size = grilleJoueur.length - 1;
+	public static int size = grilleJoueur.length;
 	
 	public Joueurs(int numero,String couleur_pion) {
 		this.numero = numero;
@@ -43,7 +43,7 @@ public class Joueurs {
 	}
 	
 	public static void affiche() {
-		for(int i = 0; i < grilleJoueur.length - 1; ++i) {
+		for(int i = 0; i < grilleJoueur.length; ++i) {
 			
 			for(int j = 0; j < grilleJoueur[i].length; ++j) {
 
@@ -52,6 +52,7 @@ public class Joueurs {
 			System.out.print(" _"+ (i+1));
 			System.out.println();
 		}
+		
 		System.out.println("1|2|3|4|5|6|7| -> Colonnes");
 	}
 	
@@ -94,13 +95,19 @@ public class Joueurs {
 			
 				if(!verifie)
 					System.out.println("[-] Cette case est occupée!");
+				
 			
 		}while(!verifie);
-			grilleJoueur[ligne][colonne] = couleur;
 		
-
+					// ######################## Checkup ###################
 			
-		affiche();
+		// Placer la couleur a la place souhaiter par le joueur...
+			grilleJoueur[ligne][colonne] = couleur;
+			
+			affiche();
+			if(verifie_si_gagner(numero, couleur, ligne, colonne, grilleJoueur)) {
+				System.out.println("[+o+] Felicitation joueur " + numero + " avez gagnez cette partie");
+			}
 
 	}
 	
@@ -126,11 +133,74 @@ public class Joueurs {
 	}
 	
 	
-	//================Fonction verifie_si_gagner==================================
+	//================Fonction Scanners==================================
 	
-	public static void verifie_si_gagner(int numero, String couleur, int ligne, int colonne) {
+	public static boolean Top(String playGround[][], String couleur) {
 		
+		int ligne, colonne;
 		
+		for(int i = 0; i < size; i++) {
+			
+			for(int j = 0; j < playGround[i].length; j++) {
+				
+				if(playGround[i][j] == couleur) {
+					
+					if(bulldog(i,j,couleur,playGround)) {
+						
+						return true;
+					}
+						
+				}
+				
+			}
+		}
+		
+		return false;
 	}
 	
-}
+	
+	//================Fonction bulldog==================================
+	
+	public static boolean bulldog(int ligne, int colonne, String couleur, String Tab[][]) {
+			
+			boolean same = false;
+			
+			for(int i = 0; i < 4; i++) {
+				
+				if(ligne == 0) {
+					
+					return false;
+				}	
+					
+				if(Tab[ligne--][colonne] == couleur) {
+					
+					same = true;
+					
+				}else {
+					return false;
+				}
+			}
+			
+			return same;
+		}
+	
+	
+	//================Fonction verifie_si_gagner==================================
+	
+		public static boolean verifie_si_gagner(int numero, String couleur, int ligne, int colonne, String grilleJoueur[][]) {
+			
+			int L, C, k;
+			boolean Result = false;
+				
+			//Verify the TOP
+			if(Top(grilleJoueur, couleur)) {
+				
+				return true;
+			}
+				
+			return Result;
+		}		
+		
+
+	}
+	

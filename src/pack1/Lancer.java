@@ -12,7 +12,7 @@ public class Lancer {
 		Joueurs J2 = new Joueurs(2,NOIR);
 		Joueurs def = new Joueurs();
 		
-		final int J1LENGTH = J1.grilleJoueur.length - 1;
+		final int J1LENGTH = J1.grilleJoueur.length;
 		final String[][] J1TAB = J1.grilleJoueur; 
 		
 		J1.vider_tab();
