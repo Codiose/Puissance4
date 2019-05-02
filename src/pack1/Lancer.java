@@ -8,18 +8,19 @@ public class Lancer {
 	
 	public static void main(String[] args) {
 		
-		Joueurs J1 = new Joueurs(1,BLANC);
-		Joueurs J2 = new Joueurs(2,NOIR);
-		Joueurs def = new Joueurs();
+		Joueurs Player = new Joueurs();
 		
-		final int J1LENGTH = J1.grilleJoueur.length;
-		final String[][] J1TAB = J1.grilleJoueur; 
+		boolean J1, J2;
 		
-		J1.vider_tab();
+		Player.vider_tab();
+		
 		do {
-		J1.joue(1,BLANC);
-		J2.joue(2,NOIR);
-		}while(!def.verifie_si_plein());
-		System.out.println("***GAME OVER***");
+			
+			J1 = Player.joue(1,BLANC);
+			//J2 =  Player.joue(2,NOIR);
+			
+		}while(!J1/* || !J2*/);
+		
+		System.out.println(">> *** Merci ***");
 	}
 }
