@@ -42,7 +42,7 @@ public class Joueurs {
 		System.out.println("1|2|3|4|5|6|7| -> Colonnes");
 	}
 	
-	public static void affiche() {
+	public static void afficher_grille() {
 		for(int i = 0; i < grilleJoueur.length - 1; ++i) {
 			
 			for(int j = 0; j < grilleJoueur[i].length; ++j) {
@@ -55,7 +55,7 @@ public class Joueurs {
 		System.out.println("1|2|3|4|5|6|7| -> Colonnes");
 	}
 	
-	public static void joue(int numero, String couleur) {
+	public static boolean joue(int numero, String couleur) {
 		int ligne;
 		int colonne;
 		boolean verifie;
@@ -71,7 +71,7 @@ public class Joueurs {
 							System.out.println("[-] Entrez une ligne correcte");
 						
 						}
-			}while(ligne > size); 		// Redemander � l'utilisateur de taper tantque le num�ro est invalide
+			}while(ligne > size); 		// Redemander � l'utilisateur de taper tantque le num�ro est invalide
 		
 			do {
 				System.out.println(">> Colonne:");
@@ -93,14 +93,20 @@ public class Joueurs {
 					System.out.println("[-] Game Over");
 			
 				if(!verifie)
-					System.out.println("[-] Cette case est occup�e!");
+					System.out.println("[-] Cette case est occupée!");
 			
 		}while(!verifie);
 			grilleJoueur[ligne][colonne] = couleur;
-		
 
-			
-		affiche();
+			afficher_grille();
+
+		// Vérification de la victoire
+        if (verifie_si_gagner(numero, couleur)) {
+            System.out.println("Le joueur " + numero + " a gagné");
+            return true;
+        }else{
+			return false;
+		}
 
 	}
 	
@@ -128,9 +134,65 @@ public class Joueurs {
 	
 	//================Fonction verifie_si_gagner==================================
 	
-	public static void wonOrNot(int numero, String couleur, int ligne, int colonne) {
-		
-		
+	public static boolean verifie_si_gagner(int numero, String couleur) {
+
+		// Vérification des lignes
+		for (int i = 0; i < size; i++) {
+			int compteur = 1;
+			for (int j = 1; j < size; j++) {
+				if (grilleJoueur[i][j] == couleur && grilleJoueur[i][j - 1] == couleur) {
+					compteur++;
+					if (compteur == 4) {
+						return true;
+					}
+				} else {
+					compteur = 1;
+				}
+			}
+		}
+	
+		// Vérification des colonnes
+		for (int i = 0; i < size; i++) {
+			int compteur = 1;
+			for (int j = 1; j < size; j++) {
+				if (grilleJoueur[j][i] == couleur && grilleJoueur[j - 1][i] == couleur) {
+					compteur++;
+					if (compteur == 4) {
+						return true;
+					}
+				} else {
+					compteur = 1;
+				}
+			}
+		}
+	
+		// Vérification des diagonales principales
+		int compteur = 1;
+		for (int i = 1; i < size; i++) {
+			if (grilleJoueur[i][i] == couleur && grilleJoueur[i - 1][i - 1] == couleur) {
+				compteur++;
+				if (compteur == 4) {
+					return true;
+				}
+			} else {
+				compteur = 1;
+			}
+		}
+	
+		// Vérification des diagonales secondaires
+		compteur = 1;
+		for (int i = 0; i < size - 3; i++) {
+			if (grilleJoueur[i][i + 3] == couleur && grilleJoueur[i + 1][i + 2] == couleur) {
+				compteur++;
+				if (compteur == 4) {
+					return true;
+				}
+			} else {
+				compteur = 1;
+			}
+		}
+
+		return false;
 	}
 	
 }
